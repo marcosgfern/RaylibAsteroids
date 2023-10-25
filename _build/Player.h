@@ -13,7 +13,9 @@ private:
 	float rotation;
 
 public:
-	Player(int totalLifes, Vector2 startingPosition);
+	Player();
+
+	void Reset();
 
 	void Draw();
 };

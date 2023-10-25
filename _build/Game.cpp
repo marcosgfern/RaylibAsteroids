@@ -9,12 +9,9 @@ static int MinAsteroids = 5;
 static int MaxAsteroids = 15;
 
 Game::Game()
-	: player(3, { WindowWidth / 2.0f, WindowHeight / 2.0f })
 {
 	screen = LOGO;
 	framesCounter = 0;
-	
-	GenerateAsteroids();
 }
 
 void Game::Initialize()
@@ -22,6 +19,8 @@ void Game::Initialize()
 	InitWindow(WindowWidth, WindowHeight, "ASTEROIDS");
 
 	SetTargetFPS(TargetFPS);
+
+	RestartGameplay();
 }
 
 void Game::RunLoop()
@@ -32,6 +31,16 @@ void Game::RunLoop()
 		Update();
 		Draw();
 	}
+}
+
+void Game::RestartGameplay()
+{
+	player.Reset();
+
+	asteroids.clear();
+	GenerateAsteroids();
+
+	projectiles.clear();
 }
 
 void Game::ProcessInput()

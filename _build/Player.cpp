@@ -1,15 +1,29 @@
 #include "Player.h"
+#include "Utilities.h"
 #include "raylib.h"
 
-Player::Player(int totalLifes, Vector2 startingPosition)
+static int TotalLifes;
+
+Player::Player()
 {
-	lifes = totalLifes;
+	lifes = TotalLifes;
 
 	lastShotTimestamp = 0;
 
-	position = startingPosition;
+	position = Utilities::GetScreenCenter();
 	speed = { 0.0f, 0.0f };
 	radius = 10;
+	rotation = 0.0f;
+}
+
+void Player::Reset()
+{
+	lifes = TotalLifes;
+
+	lastShotTimestamp = 0;
+
+	position = Utilities::GetScreenCenter();
+	speed = { 0.0f, 0.0f };
 	rotation = 0.0f;
 }
 

@@ -21,3 +21,8 @@ Vector2 Utilities::RandomNormalizedVector()
 
     return Vector2Normalize(vector);
 }
+
+Vector2 Utilities::GetScreenCenter()
+{
+    return {(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2);
+}

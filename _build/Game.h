@@ -31,7 +31,7 @@ public:
 	void RunLoop();
 
 private:
-	void NewGame();
+	void RestartGameplay();
 
 	void ProcessInput();
 	void Update();
