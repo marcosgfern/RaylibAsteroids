@@ -17,5 +17,12 @@ private:
 	int radius;
 
 public:
-	Asteroid(Vector2 startingPosition);
+	Asteroid(int screenWidth, int screenHeight);
+
+
+
+	void Draw();
+
+private:
+	Vector2 RandomSpawn(int screenWidth, int screenHeight);
 };

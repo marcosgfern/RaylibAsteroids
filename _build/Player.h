@@ -14,4 +14,6 @@ private:
 
 public:
 	Player(int totalLifes, Vector2 startingPosition);
+
+	void Draw();
 };

@@ -1,4 +1,9 @@
 #include "raylib.h"
+#include "Player.h"
+#include "Asteroid.h"
+#include "Projectile.h"
+
+#include <list>
 
 enum GameScreen
 {
@@ -12,6 +17,11 @@ class Game
 {
 private:
 	GameScreen screen;
+
+	Player player;
+	std::list<Asteroid> asteroids;
+	std::list<Projectile> projectiles;
+
 	int framesCounter;
 
 public:
@@ -25,5 +35,10 @@ private:
 	void Update();
 	void Draw();
 
+	void GenerateAsteroids();
+
 	void ShowLogo(int timeInSeconds);
+
+	void DrawAsteroids();
+	void DrawProjectiles();
 };

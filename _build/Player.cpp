@@ -9,6 +9,11 @@ Player::Player(int totalLifes, Vector2 startingPosition)
 
 	position = startingPosition;
 	speed = { 0.0f, 0.0f };
-	radius = 1;
+	radius = 10;
 	rotation = 0.0f;
+}
+
+void Player::Draw()
+{
+	DrawCircleV(position, radius, WHITE);
 }

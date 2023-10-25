@@ -2,16 +2,24 @@
 #include "raylib.h"
 
 static int TargetFPS = 60;
+static int WindowWidth = 800;
+static int WindowHeight = 450;
+
+static int MinAsteroids = 5;
+static int MaxAsteroids = 15;
 
 Game::Game()
+	: player(3, { WindowWidth / 2.0f, WindowHeight / 2.0f })
 {
 	screen = LOGO;
 	framesCounter = 0;
+	
+	GenerateAsteroids();
 }
 
 void Game::Initialize()
 {
-	InitWindow(800, 450, "ASTEROIDS");
+	InitWindow(WindowWidth, WindowHeight, "ASTEROIDS");
 
 	SetTargetFPS(TargetFPS);
 }
@@ -35,6 +43,10 @@ void Game::ProcessInput()
 	{
 		if (IsKeyPressed(KEY_ENTER)) screen = GAMEPLAY;
 	} break;
+	case GAMEPLAY:
+	{
+		if (IsKeyPressed(KEY_ENTER)) screen = ENDING;
+	} break;
 	case ENDING:
 	{
 		if (IsKeyPressed(KEY_ENTER)) screen = TITLE;
@@ -54,8 +66,8 @@ void Game::Update()
 	} break;
 	case TITLE:
 	{
-		
-	}
+
+	} break;
 	case GAMEPLAY:
 	{
 
@@ -63,8 +75,7 @@ void Game::Update()
 	case ENDING:
 	{
 
-	}
-
+	} break;
 	default: break;
 	}
 }
@@ -83,19 +94,39 @@ void Game::Draw()
 	case TITLE:
 	{
 		DrawText("TITLE SCREEN", 20, 20, 40, WHITE);
+
+		DrawText(
+			"PRESS [ENTER] to START",
+			GetScreenWidth() / 2 - MeasureText("PRESS [ENTER] to START", 20) / 2,
+			GetScreenHeight() / 2 + 60, 20, GRAY);
 	} break;
 	case GAMEPLAY:
 	{
-		DrawText("GAMEPLAY SCREEN", 20, 20, 40, WHITE);
+		player.Draw();
+		DrawAsteroids();
+		DrawProjectiles();
+		
 	} break;
 	case ENDING:
 	{
 		DrawText("ENDING SCREEN", 20, 20, 40, WHITE);
+		DrawText("PRESS [ENTER] TO PLAY AGAIN",
+			GetScreenWidth() / 2 - MeasureText("PRESS [ENTER] TO PLAY AGAIN", 20) / 2,
+			GetScreenHeight() / 2 + 80, 20, GRAY);
 	} break;
 	default: break;
 	}
 
 	EndDrawing();
+}
+
+void Game::GenerateAsteroids()
+{
+	int asteroidQuantity = GetRandomValue(MinAsteroids, MaxAsteroids);
+	for (int i = 0; i < asteroidQuantity; i++)
+	{
+		asteroids.push_back(Asteroid(WindowWidth, WindowHeight));
+	}
 }
 
 void Game::ShowLogo(int timeInSeconds)
@@ -106,5 +137,23 @@ void Game::ShowLogo(int timeInSeconds)
 	{
 		screen = TITLE;
 		framesCounter = 0;
+	}
+}
+
+void Game::DrawAsteroids()
+{
+	std::list<Asteroid>::iterator asteroidIt;
+	for (asteroidIt = asteroids.begin(); asteroidIt != asteroids.end(); ++asteroidIt)
+	{
+		asteroidIt->Draw();
+	}
+}
+
+void Game::DrawProjectiles()
+{
+	std::list<Projectile>::iterator projectileIt;
+	for (projectileIt = projectiles.begin(); projectileIt != projectiles.end(); ++projectileIt)
+	{
+		projectileIt->Draw();
 	}
 }

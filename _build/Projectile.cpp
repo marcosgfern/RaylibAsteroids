@@ -9,5 +9,10 @@ Projectile::Projectile(Vector2 startingPosition, Vector2 normalizedSpeed)
 	position = startingPosition;
 	speed = Vector2Scale(normalizedSpeed, BaseSpeed);
 
-	radius = 1;
+	radius = 3;
+}
+
+void Projectile::Draw()
+{
+	DrawCircleV(position, radius, WHITE);
 }
