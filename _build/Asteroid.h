@@ -1,4 +1,6 @@
-#include "raylib.h"
+#pragma once
+
+#include "GameObject.h"
 
 enum AsteroidSize
 {
@@ -7,7 +9,7 @@ enum AsteroidSize
 	SMALL
 };
 
-class Asteroid
+class Asteroid : public GameObject
 {
 public:
 	static Texture2D	BigSprite,
@@ -17,16 +19,9 @@ public:
 private:
 	AsteroidSize size;
 
-	Vector2 position;
-	Vector2 speed;
-	int radius;
-
 public:
 	Asteroid(int screenWidth, int screenHeight);
-
-	void Update();
-
-	void Draw();
+	void SetSize(AsteroidSize newSize);
 
 private:
 	Vector2 RandomSpawn(int screenWidth, int screenHeight);

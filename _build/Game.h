@@ -1,7 +1,9 @@
-#include "raylib.h"
+#pragma once
+
 #include "Player.h"
 #include "Asteroid.h"
 #include "Projectile.h"
+#include "raylib.h"
 
 #include <list>
 

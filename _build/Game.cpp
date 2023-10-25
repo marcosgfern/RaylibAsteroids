@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "raylib.h"
 
 static int TargetFPS = 60;
 static int WindowWidth = 800;
@@ -36,9 +35,9 @@ void Game::RunLoop()
 
 void Game::LoadTextures()
 {
-	Player::Sprite = LoadTexture("resources/ship.png");
-	Projectile::Sprite = LoadTexture("resources/projectile.png");
+	player.SetSprite(LoadTexture("resources/ship.png"));
 
+	Projectile::Sprite = LoadTexture("resources/projectile.png");
 	Asteroid::BigSprite = LoadTexture("resources/asteroid_big.png");
 	Asteroid::MediumSprite = LoadTexture("resources/asteroid_medium.png");
 	Asteroid::SmallSprite = LoadTexture("resources/asteroid_small.png");

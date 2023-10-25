@@ -1,14 +1,11 @@
 #include "Player.h"
 #include "Utilities.h"
-#include "raylib.h"
 #include "raymath.h"
 
-static int TotalLifes;
+static int TotalLifes = 3;
 
 static int BaseSpeed = 5;
 static int BaseRotationSpeed = 3;
-
-Texture2D Player::Sprite = {};
 
 Player::Player()
 {
@@ -22,6 +19,11 @@ Player::Player()
 	rotation = 0.0f;
 }
 
+void Player::SetSprite(Texture2D newSprite)
+{
+	sprite = newSprite;
+}
+
 void Player::Reset()
 {
 	lifes = TotalLifes;
@@ -33,33 +35,9 @@ void Player::Reset()
 	rotation = 0.0f;
 }
 
-void Player::Update()
-{
-	position.x += speed.x;
-	position.y += speed.y;
-
-	float width = (float)GetScreenWidth();
-	float height = (float) GetScreenHeight();
-
-	if (position.x > width)
-		position.x -= width;
-	else if (position.x < 0) 
-		position.x += width;
-
-	if (position.y > height)
-		position.y -= height;
-	else if (position.y < 0)
-		position.y += height;
-}
-
 void Player::SetSpeed(Vector2 rawDirection)
 {
 	speed = Vector2Scale(
 		Vector2Normalize(rawDirection),
 		BaseSpeed);
-}
-
-void Player::Draw()
-{
-	Utilities::DrawTextureExCustom(Sprite, position, rotation, 1, WHITE);
 }

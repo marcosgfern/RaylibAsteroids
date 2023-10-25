@@ -1,7 +1,5 @@
 #include "Asteroid.h"
 #include "Utilities.h"
-#include "raylib.h"
-#include "raymath.h"
 
 #include <random>
 
@@ -17,51 +15,28 @@ Texture2D Asteroid::SmallSprite = {};
 
 Asteroid::Asteroid(int windowWidth, int windowHeight)
 {
-	size = BIG;
-	
 	position = RandomSpawn(windowWidth, windowHeight);
 	speed = Vector2Scale(Utilities::RandomNormalizedVector(), BaseSpeed);
-
 	radius = RadiusBig;
+	rotation = 0.f;
+
+	SetSize(BIG);
 }
 
-void Asteroid::Update()
+void Asteroid::SetSize(AsteroidSize newSize)
 {
-	position.x += speed.x;
-	position.y += speed.y;
-
-	float width = (float)GetScreenWidth();
-	float height = (float)GetScreenHeight();
-
-	if (position.x > width)
-		position.x -= width;
-	else if (position.x < 0)
-		position.x += width;
-
-	if (position.y > height)
-		position.y -= height;
-	else if (position.y < 0)
-		position.y += height;
-}
-
-void Asteroid::Draw()
-{
-	switch (size)
+	switch (newSize)
 	{
-	case BIG:
-	{
-		Utilities::DrawTextureExCustom(BigSprite, position, 0.f, 1.f, WHITE);
-	} break;
-	case MEDIUM:
-	{
-		Utilities::DrawTextureExCustom(MediumSprite, position, 0.f, 1.f, WHITE);
-	} break;
-	case SMALL:
-	{
-		Utilities::DrawTextureExCustom(SmallSprite, position, 0.f, 1.f, WHITE);
-	} break;
+	case BIG: sprite = Asteroid::BigSprite;
+		break;
+	case MEDIUM: sprite = Asteroid::MediumSprite;
+		break;
+	case SMALL: sprite = Asteroid::SmallSprite;
+		break;
 	default: break;
 	}
+
+	size = newSize;
 }
 
 Vector2 Asteroid::RandomSpawn(int windowWidth, int windowHeight)

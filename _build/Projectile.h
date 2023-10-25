@@ -1,19 +1,11 @@
-#include "raylib.h"
+#pragma once
 
-class Projectile
+#include "GameObject.h"
+
+class Projectile : public GameObject
 {
 public:
 	static Texture2D Sprite;
 
-private:
-	Vector2 position;
-	Vector2 speed;
-	int radius;
-
-public:
 	Projectile(Vector2 startingPosition, Vector2 normalizedSpeed);
-
-	void Update();
-
-	void Draw();
 };
