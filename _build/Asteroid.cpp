@@ -11,6 +11,10 @@ static int RadiusBig = 40;
 static int RadiusMedium = 30;
 static int RadiusSmall = 20;
 
+Texture2D Asteroid::BigSprite = {};
+Texture2D Asteroid::MediumSprite = {};
+Texture2D Asteroid::SmallSprite = {};
+
 Asteroid::Asteroid(int windowWidth, int windowHeight)
 {
 	size = BIG;
@@ -27,15 +31,15 @@ void Asteroid::Draw()
 	{
 	case BIG:
 	{
-		DrawCircleV(position, RadiusBig, GREEN);
+		Utilities::DrawTextureExCustom(BigSprite, position, 0.f, 1.f, WHITE);
 	} break;
 	case MEDIUM:
 	{
-		DrawCircleV(position, RadiusMedium, YELLOW);
+		Utilities::DrawTextureExCustom(MediumSprite, position, 0.f, 1.f, WHITE);
 	} break;
 	case SMALL:
 	{
-		DrawCircleV(position, RadiusSmall, RED);
+		Utilities::DrawTextureExCustom(SmallSprite, position, 0.f, 1.f, WHITE);
 	} break;
 	default: break;
 	}

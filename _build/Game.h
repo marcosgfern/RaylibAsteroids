@@ -31,6 +31,7 @@ public:
 	void RunLoop();
 
 private:
+	void LoadTextures();
 	void RestartGameplay();
 
 	void ProcessInput();

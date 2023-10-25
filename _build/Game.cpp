@@ -17,8 +17,9 @@ Game::Game()
 void Game::Initialize()
 {
 	InitWindow(WindowWidth, WindowHeight, "ASTEROIDS");
-
 	SetTargetFPS(TargetFPS);
+
+	LoadTextures();
 
 	RestartGameplay();
 }
@@ -31,6 +32,16 @@ void Game::RunLoop()
 		Update();
 		Draw();
 	}
+}
+
+void Game::LoadTextures()
+{
+	Player::Sprite = LoadTexture("resources/ship.png");
+	Projectile::Sprite = LoadTexture("resources/projectile.png");
+
+	Asteroid::BigSprite = LoadTexture("resources/asteroid_big.png");
+	Asteroid::MediumSprite = LoadTexture("resources/asteroid_medium.png");
+	Asteroid::SmallSprite = LoadTexture("resources/asteroid_small.png");
 }
 
 void Game::RestartGameplay()

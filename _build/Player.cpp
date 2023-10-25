@@ -8,6 +8,8 @@ static int TotalLifes;
 static int BaseSpeed = 5;
 static int BaseRotationSpeed = 3;
 
+Texture2D Player::Sprite = {};
+
 Player::Player()
 {
 	lifes = TotalLifes;
@@ -59,5 +61,5 @@ void Player::SetSpeed(Vector2 rawDirection)
 
 void Player::Draw()
 {
-	DrawCircleV(position, radius, WHITE);
+	Utilities::DrawTextureExCustom(Sprite, position, rotation, 1, WHITE);
 }

@@ -9,6 +9,11 @@ enum AsteroidSize
 
 class Asteroid
 {
+public:
+	static Texture2D	BigSprite,
+						MediumSprite,
+						SmallSprite;
+
 private:
 	AsteroidSize size;
 

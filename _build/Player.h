@@ -2,6 +2,11 @@
 
 class Player
 {
+public:
+	static Texture2D Sprite;
+
+	static void SetSprite(Texture2D sprite);
+
 private:
 	int lifes;
 

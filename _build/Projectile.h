@@ -2,6 +2,9 @@
 
 class Projectile
 {
+public:
+	static Texture2D Sprite;
+
 private:
 	Vector2 position;
 	Vector2 speed;
