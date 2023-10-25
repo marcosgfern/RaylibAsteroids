@@ -31,6 +31,8 @@ public:
 	void RunLoop();
 
 private:
+	void NewGame();
+
 	void ProcessInput();
 	void Update();
 	void Draw();
