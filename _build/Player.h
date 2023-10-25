@@ -17,5 +17,9 @@ public:
 
 	void Reset();
 
+	void SetSpeed(Vector2 rawDirection);
+
+	void Update();
+
 	void Draw();
 };

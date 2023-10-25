@@ -55,6 +55,7 @@ void Game::ProcessInput()
 	case GAMEPLAY:
 	{
 		if (IsKeyPressed(KEY_ENTER)) screen = ENDING;
+		ProcessMovementInput();
 	} break;
 	case ENDING:
 	{
@@ -79,7 +80,7 @@ void Game::Update()
 	} break;
 	case GAMEPLAY:
 	{
-
+		player.Update();
 	} break;
 	case ENDING:
 	{
@@ -127,6 +128,21 @@ void Game::Draw()
 	}
 
 	EndDrawing();
+}
+
+void Game::ProcessMovementInput()
+{
+	if (screen == GAMEPLAY)
+	{
+		Vector2 direction = { 0.f, 0.f };
+
+		if (IsKeyDown(KEY_W)) direction.y -= 1.f;
+		if (IsKeyDown(KEY_A)) direction.x -= 1.f;
+		if (IsKeyDown(KEY_S)) direction.y += 1.f;
+		if (IsKeyDown(KEY_D)) direction.x += 1.f;
+
+		player.SetSpeed(direction);
+	}
 }
 
 void Game::GenerateAsteroids()

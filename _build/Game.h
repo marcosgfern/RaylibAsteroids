@@ -37,10 +37,11 @@ private:
 	void Update();
 	void Draw();
 
+	void ProcessMovementInput();
+
 	void GenerateAsteroids();
 
 	void ShowLogo(int timeInSeconds);
-
 	void DrawAsteroids();
 	void DrawProjectiles();
 };
