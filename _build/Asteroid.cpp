@@ -5,7 +5,7 @@
 
 #include <random>
 
-static float BaseSpeed = 3;
+static float BaseSpeed = 1;
 
 static int RadiusBig = 40;
 static int RadiusMedium = 30;
@@ -23,6 +23,25 @@ Asteroid::Asteroid(int windowWidth, int windowHeight)
 	speed = Vector2Scale(Utilities::RandomNormalizedVector(), BaseSpeed);
 
 	radius = RadiusBig;
+}
+
+void Asteroid::Update()
+{
+	position.x += speed.x;
+	position.y += speed.y;
+
+	float width = (float)GetScreenWidth();
+	float height = (float)GetScreenHeight();
+
+	if (position.x > width)
+		position.x -= width;
+	else if (position.x < 0)
+		position.x += width;
+
+	if (position.y > height)
+		position.y -= height;
+	else if (position.y < 0)
+		position.y += height;
 }
 
 void Asteroid::Draw()

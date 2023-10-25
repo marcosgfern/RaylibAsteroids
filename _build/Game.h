@@ -42,6 +42,9 @@ private:
 
 	void GenerateAsteroids();
 
+	void UpdateAsteroids();
+	void UpdateProjectiles();
+
 	void ShowLogo(int timeInSeconds);
 	void DrawAsteroids();
 	void DrawProjectiles();

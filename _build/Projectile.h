@@ -13,5 +13,7 @@ private:
 public:
 	Projectile(Vector2 startingPosition, Vector2 normalizedSpeed);
 
+	void Update();
+
 	void Draw();
 };

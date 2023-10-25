@@ -15,6 +15,25 @@ Projectile::Projectile(Vector2 startingPosition, Vector2 normalizedSpeed)
 	radius = 2;
 }
 
+void Projectile::Update()
+{
+	position.x += speed.x;
+	position.y += speed.y;
+
+	float width = (float)GetScreenWidth();
+	float height = (float)GetScreenHeight();
+
+	if (position.x > width)
+		position.x -= width;
+	else if (position.x < 0)
+		position.x += width;
+
+	if (position.y > height)
+		position.y -= height;
+	else if (position.y < 0)
+		position.y += height;
+}
+
 void Projectile::Draw()
 {
 	Utilities::DrawTextureExCustom(Sprite, position, 0.f, 1.f, WHITE);

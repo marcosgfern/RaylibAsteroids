@@ -24,7 +24,7 @@ private:
 public:
 	Asteroid(int screenWidth, int screenHeight);
 
-
+	void Update();
 
 	void Draw();
 

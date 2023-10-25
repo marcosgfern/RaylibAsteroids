@@ -92,6 +92,8 @@ void Game::Update()
 	case GAMEPLAY:
 	{
 		player.Update();
+		UpdateAsteroids();
+		UpdateProjectiles();
 	} break;
 	case ENDING:
 	{
@@ -162,6 +164,24 @@ void Game::GenerateAsteroids()
 	for (int i = 0; i < asteroidQuantity; i++)
 	{
 		asteroids.push_back(Asteroid(WindowWidth, WindowHeight));
+	}
+}
+
+void Game::UpdateAsteroids()
+{
+	std::list<Asteroid>::iterator asteroidIt;
+	for (asteroidIt = asteroids.begin(); asteroidIt != asteroids.end(); ++asteroidIt)
+	{
+		asteroidIt->Update();
+	}
+}
+
+void Game::UpdateProjectiles()
+{
+	std::list<Projectile>::iterator projectileIt;
+	for (projectileIt = projectiles.begin(); projectileIt != projectiles.end(); ++projectileIt)
+	{
+		projectileIt->Update();
 	}
 }
 
