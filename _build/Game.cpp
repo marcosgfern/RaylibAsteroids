@@ -23,7 +23,7 @@ void Game::Initialize()
 	InitWindow(WindowWidth, WindowHeight, "ASTEROIDS");
 	SetTargetFPS(TargetFPS);
 
-	LoadTextures();
+	LoadResources();
 
 	RestartGameplay();
 }
@@ -38,8 +38,11 @@ void Game::RunLoop()
 	}
 }
 
-void Game::LoadTextures()
+void Game::LoadResources()
 {
+	logoTexture = LoadTexture("resources/logo.png");
+	titleTexture = LoadTexture("resources/title.png");
+
 	player.SetSprite(LoadTexture("resources/ship.png"));
 	hud.SetLifeSprite(LoadTexture("resources/ship.png"));
 
@@ -47,6 +50,8 @@ void Game::LoadTextures()
 	Asteroid::BigSprite = LoadTexture("resources/asteroid_big.png");
 	Asteroid::MediumSprite = LoadTexture("resources/asteroid_medium.png");
 	Asteroid::SmallSprite = LoadTexture("resources/asteroid_small.png");
+
+	customFont = LoadFont("resources/setback.png");
 }
 
 void Game::RestartGameplay()
@@ -101,7 +106,7 @@ void Game::Update()
 	{
 	case LOGO:
 	{
-		ShowLogo(1);
+		ShowLogo(3);
 
 	} break;
 	case TITLE:
@@ -135,16 +140,11 @@ void Game::Draw()
 	{
 	case LOGO:
 	{
-		DrawText("LOGO SCREEN", 20, 20, 40, WHITE);
+		DrawLogo();
 	}break;
 	case TITLE:
 	{
-		DrawText("TITLE SCREEN", 20, 20, 40, WHITE);
-
-		DrawText(
-			"PRESS [ENTER] to START",
-			GetScreenWidth() / 2 - MeasureText("PRESS [ENTER] to START", 20) / 2,
-			GetScreenHeight() / 2 + 60, 20, GRAY);
+		DrawTitleScreen();
 	} break;
 	case GAMEPLAY:
 	{
@@ -193,6 +193,17 @@ void Game::ProcessMovementInput()
 		{
 			player.Shoot(TargetFPS * ShootCoolingTimeInSeconds);
 		}
+	}
+}
+
+void Game::ShowLogo(int timeInSeconds)
+{
+	framesCounter++;
+
+	if (framesCounter > timeInSeconds * TargetFPS)
+	{
+		screen = TITLE;
+		framesCounter = 0;
 	}
 }
 
@@ -277,17 +288,6 @@ void Game::UpdateAsteroidsProjectilesCollisions()
 	}
 }
 
-void Game::ShowLogo(int timeInSeconds)
-{
-	framesCounter++;
-
-	if (framesCounter > timeInSeconds * TargetFPS)
-	{
-		screen = TITLE;
-		framesCounter = 0;
-	}
-}
-
 void Game::DrawAsteroids()
 {
 	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
@@ -304,4 +304,27 @@ void Game::DrawProjectiles()
 	{
 		projectileIt->get().Draw();
 	}
+}
+
+void Game::DrawLogo()
+{
+	Utilities::DrawTextureExCustom(logoTexture, { (float)WindowWidth / 2, (float)WindowHeight / 2 }, 0.f, 1, WHITE);
+}
+
+void Game::DrawTitleScreen()
+{
+	framesCounter++;
+
+	int titleHeight = -60 + framesCounter * 4;
+	if (titleHeight >= 140) titleHeight = 140;
+	Utilities::DrawTextureExCustom(titleTexture, { (float)WindowWidth / 2, (float)titleHeight }, 0.f, 1, WHITE);
+
+	if ((framesCounter / 30) % 2 == 0) 
+		DrawTextEx(
+			customFont, 
+			"PRESS [ENTER] to START", 
+			{ (float)GetScreenWidth()/2 - MeasureTextEx(customFont, "PRESS [ENTER] to START", 20, 5).x/2, (float)GetScreenHeight()/2 + 60 },
+			20,
+			5,
+			DARKGRAY);
 }

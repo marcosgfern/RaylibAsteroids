@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "ProjectilePool.h"
 #include "GameHUD.h"
+#include "Utilities.h"
 
 #include "raylib.h"
 
@@ -34,6 +35,11 @@ private:
 
 	int framesCounter;
 
+	Texture2D	logoTexture,
+				titleTexture;
+
+	Font customFont;
+
 public:
 	Game();
 	
@@ -41,7 +47,7 @@ public:
 	void RunLoop();
 
 private:
-	void LoadTextures();
+	void LoadResources();
 	void RestartGameplay();
 	void StartNewRound();
 
@@ -51,6 +57,8 @@ private:
 
 	void ProcessMovementInput();
 
+	void ShowLogo(int timeInSeconds);
+
 	void GenerateAsteroids();
 
 	void UpdateAsteroids();
@@ -59,7 +67,9 @@ private:
 	void UpdatePlayerAsteroidsCollisions();
 	void UpdateAsteroidsProjectilesCollisions();
 
-	void ShowLogo(int timeInSeconds);
 	void DrawAsteroids();
 	void DrawProjectiles();
+
+	void DrawLogo();
+	void DrawTitleScreen();
 };
