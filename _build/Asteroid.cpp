@@ -5,9 +5,9 @@
 
 static float BaseSpeed = 1.5f;
 
-static int RadiusBig = 40;
-static int RadiusMedium = 30;
-static int RadiusSmall = 20;
+static int RadiusBig = 35;
+static int RadiusMedium = 25;
+static int RadiusSmall = 15;
 
 Texture2D Asteroid::BigSprite = {};
 Texture2D Asteroid::MediumSprite = {};
@@ -50,19 +50,20 @@ void Asteroid::Reset(int screenWidth, int screenHeight)
 	SetSize(BIG);
 }
 
-void Asteroid::Hit()
+/// <returns>Points</returns>
+int Asteroid::Hit()
 {
 	switch (size)
 	{
 	case BIG:
 		SetSize(MEDIUM);
-		break;
+		return 10;
 	case MEDIUM:
 		SetSize(SMALL);
-		break;
+		return 20;
 	case SMALL:
 		active = false;
-		break;
+		return 30;
 	default: break;
 	}
 }

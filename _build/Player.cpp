@@ -2,7 +2,7 @@
 #include "Utilities.h"
 #include "raymath.h"
 
-static int TotalLifes = 3;
+static int TotalLifes = 2;
 
 static int BaseSpeed = 5;
 static int BaseRotationSpeed = 5;
@@ -22,6 +22,11 @@ Player::Player()
 	radius = 10;
 
 	projectilePoolPointer = { 0 };
+}
+
+int Player::GetLifes()
+{
+	return lifes;
 }
 
 void Player::SetSprite(Texture2D newSprite)

@@ -12,6 +12,7 @@ static float ShootCoolingTimeInSeconds = 0.35f;
 Game::Game()
 {
 	screen = LOGO;
+	points = 0;
 	framesCounter = 0;
 
 	player.SetProjectilePool(&projectiles);
@@ -40,6 +41,7 @@ void Game::RunLoop()
 void Game::LoadTextures()
 {
 	player.SetSprite(LoadTexture("resources/ship.png"));
+	hud.SetLifeSprite(LoadTexture("resources/ship.png"));
 
 	Projectile::Sprite = LoadTexture("resources/projectile.png");
 	Asteroid::BigSprite = LoadTexture("resources/asteroid_big.png");
@@ -49,6 +51,7 @@ void Game::LoadTextures()
 
 void Game::RestartGameplay()
 {
+	points = 0;
 	player.Reset();
 
 	asteroids.Clear();
@@ -148,7 +151,9 @@ void Game::Draw()
 		DrawProjectiles();
 		DrawAsteroids();
 		player.Draw();
-		
+
+		hud.Draw(player.GetLifes(), points, WindowWidth, WindowHeight);
+
 	} break;
 	case ENDING:
 	{
@@ -264,7 +269,7 @@ void Game::UpdateAsteroidsProjectilesCollisions()
 					asteroidIt->get().GetPosition(), asteroidIt->get().GetRadius()))
 				{
 					projectileIt->get().SetActive(false);
-					asteroidIt->get().Hit();
+					points += asteroidIt->get().Hit();
 					break;
 				}
 			}

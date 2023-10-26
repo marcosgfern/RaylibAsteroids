@@ -5,6 +5,8 @@
 #include "AsteroidPool.h"
 #include "Projectile.h"
 #include "ProjectilePool.h"
+#include "GameHUD.h"
+
 #include "raylib.h"
 
 #include <list>
@@ -22,9 +24,13 @@ class Game
 private:
 	GameScreen screen;
 
+	int points;
+
 	Player player;
 	AsteroidPool asteroids;
 	ProjectilePool projectiles;
+
+	GameHUD hud;
 
 	int framesCounter;
 

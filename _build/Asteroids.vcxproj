@@ -262,6 +262,7 @@
     <ClCompile Include="Asteroid.cpp" />
     <ClCompile Include="AsteroidPool.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameHUD.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="Asteroid.h" />
     <ClInclude Include="AsteroidPool.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameHUD.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
