@@ -26,6 +26,10 @@ private:
 	GameScreen screen;
 
 	int points;
+	int gameTimeCounter;
+
+	int highScore;
+	float highScoreTime;
 
 	Player player;
 	AsteroidPool asteroids;
@@ -50,6 +54,7 @@ private:
 	void LoadResources();
 	void RestartGameplay();
 	void StartNewRound();
+	void GameOver();
 
 	void ProcessInput();
 	void Update();

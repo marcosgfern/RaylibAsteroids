@@ -12,7 +12,12 @@ static float ShootCoolingTimeInSeconds = 0.35f;
 Game::Game()
 {
 	screen = LOGO;
+	
 	points = 0;
+	gameTimeCounter = 0;
+	highScore = 0;
+	highScoreTime = 0.f;
+
 	framesCounter = 0;
 
 	player.SetProjectilePool(&projectiles);
@@ -56,7 +61,11 @@ void Game::LoadResources()
 
 void Game::RestartGameplay()
 {
+	framesCounter = 0;
+
 	points = 0;
+	gameTimeCounter = 0;
+
 	player.Reset();
 
 	asteroids.Clear();
@@ -72,6 +81,18 @@ void Game::StartNewRound()
 
 	projectiles.Clear();
 	GenerateAsteroids();
+}
+
+void Game::GameOver()
+{
+	screen = ENDING;
+	framesCounter = 0;
+
+	if (points > highScore)
+	{
+		highScore = points;
+		highScoreTime = (float)gameTimeCounter / TargetFPS;
+	}
 }
 
 void Game::ProcessInput()
@@ -91,8 +112,7 @@ void Game::ProcessInput()
 	{
 		if (IsKeyPressed(KEY_ENTER))
 		{
-			screen = ENDING;
-			framesCounter = 0;
+			GameOver();
 		}
 		ProcessMovementInput();
 	} break;
@@ -129,6 +149,7 @@ void Game::Update()
 
 		UpdatePlayerAsteroidsCollisions();
 		UpdateAsteroidsProjectilesCollisions();
+		gameTimeCounter++;
 
 	} break;
 	case ENDING:
@@ -261,7 +282,7 @@ void Game::UpdatePlayerAsteroidsCollisions()
 			{
 				if (player.Hit())
 				{
-					screen = ENDING;
+					GameOver();
 				}
 			}
 		}
@@ -345,6 +366,32 @@ void Game::DrawEndingScreen()
 		40, 
 		10, 
 		RED);
+
+	const char* scoreText =
+		TextFormat("SCORE: %d\n\nTIME: %.2f", points, (float)gameTimeCounter/TargetFPS);
+	DrawText(
+		scoreText,
+		WindowWidth / 2 - MeasureText(scoreText, 20) / 2,
+		100,
+		20,
+		WHITE);
+
+	DrawTextEx(
+		customFont,
+		"HIGHSCORE",
+		{ (float)WindowWidth / 2 - MeasureTextEx(customFont, "HIGHSCORE", 30, 7).x / 2, 200 },
+		30,
+		7,
+		BLUE);
+
+	const char* highScoreText = 
+		TextFormat("SCORE: %d\n\nTIME: %.2f", highScore, highScoreTime);
+	DrawText(
+		highScoreText,
+		WindowWidth / 2 - MeasureText(highScoreText, 20) / 2,
+		250,
+		20,
+		SKYBLUE);
 
 	if ((framesCounter / 30) % 2 == 0)
 		DrawTextEx(
