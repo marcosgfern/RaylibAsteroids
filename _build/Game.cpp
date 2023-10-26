@@ -89,12 +89,20 @@ void Game::ProcessInput()
 	} break;
 	case GAMEPLAY:
 	{
-		if (IsKeyPressed(KEY_ENTER)) screen = ENDING;
+		if (IsKeyPressed(KEY_ENTER))
+		{
+			screen = ENDING;
+			framesCounter = 0;
+		}
 		ProcessMovementInput();
 	} break;
 	case ENDING:
 	{
-		if (IsKeyPressed(KEY_ENTER)) screen = TITLE;
+		if (IsKeyPressed(KEY_ENTER))
+		{
+			screen = TITLE;
+			framesCounter = 0;
+		}
 	} break;
 	default: break;
 	}
@@ -157,10 +165,7 @@ void Game::Draw()
 	} break;
 	case ENDING:
 	{
-		DrawText("ENDING SCREEN", 20, 20, 40, WHITE);
-		DrawText("PRESS [ENTER] TO PLAY AGAIN",
-			GetScreenWidth() / 2 - MeasureText("PRESS [ENTER] TO PLAY AGAIN", 20) / 2,
-			GetScreenHeight() / 2 + 80, 20, GRAY);
+		DrawEndingScreen();
 	} break;
 	default: break;
 	}
@@ -323,7 +328,29 @@ void Game::DrawTitleScreen()
 		DrawTextEx(
 			customFont, 
 			"PRESS [ENTER] to START", 
-			{ (float)GetScreenWidth()/2 - MeasureTextEx(customFont, "PRESS [ENTER] to START", 20, 5).x/2, (float)GetScreenHeight()/2 + 60 },
+			{ (float)WindowWidth/2 - MeasureTextEx(customFont, "PRESS [ENTER] to START", 20, 5).x/2, (float)WindowHeight/2 + 60 },
+			20,
+			5,
+			DARKGRAY);
+}
+
+void Game::DrawEndingScreen()
+{
+	framesCounter++;
+
+	DrawTextEx(
+		customFont, 
+		"GAME OVER", 
+		{ (float)WindowWidth / 2 - MeasureTextEx(customFont, "GAME OVER", 40, 10).x / 2, 30 },
+		40, 
+		10, 
+		RED);
+
+	if ((framesCounter / 30) % 2 == 0)
+		DrawTextEx(
+			customFont,
+			"PRESS [ENTER] to PLAY AGAIN",
+			{ (float)WindowWidth/2 - MeasureTextEx(customFont, "PRESS [ENTER] to PLAY AGAIN", 20, 5).x/2, (float)WindowHeight - 50 },
 			20,
 			5,
 			DARKGRAY);

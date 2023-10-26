@@ -72,4 +72,5 @@ private:
 
 	void DrawLogo();
 	void DrawTitleScreen();
+	void DrawEndingScreen();
 };
