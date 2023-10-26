@@ -64,7 +64,11 @@ void Game::ProcessInput()
 	case LOGO: break;
 	case TITLE:
 	{
-		if (IsKeyPressed(KEY_ENTER)) screen = GAMEPLAY;
+		if (IsKeyPressed(KEY_ENTER))
+		{
+			screen = GAMEPLAY;
+			RestartGameplay();
+		}
 	} break;
 	case GAMEPLAY:
 	{
@@ -85,7 +89,7 @@ void Game::Update()
 	{
 	case LOGO:
 	{
-		ShowLogo(3);
+		ShowLogo(1);
 
 	} break;
 	case TITLE:

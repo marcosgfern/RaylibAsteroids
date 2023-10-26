@@ -19,7 +19,7 @@ void AsteroidPool::AddElements(int quantity, int screenWidth, int screenHeight)
 {
     if (!elements.empty())
     {
-        for (std::list<Asteroid>::iterator it = elements.begin(); it != elements.end() || quantity > 0; it++)
+        for (std::list<Asteroid>::iterator it = elements.begin(); it != elements.end() && quantity > 0; it++)
         {
             if (!it->IsActive())
             {

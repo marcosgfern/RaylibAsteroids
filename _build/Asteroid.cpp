@@ -3,7 +3,7 @@
 
 #include <random>
 
-static float BaseSpeed = 1;
+static float BaseSpeed = 1.5f;
 
 static int RadiusBig = 40;
 static int RadiusMedium = 30;
