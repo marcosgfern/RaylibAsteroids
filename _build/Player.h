@@ -30,6 +30,8 @@ public:
 
 	void Update();
 
+	void Draw();
+
 	bool Hit();
 	bool IsInvincible();
 

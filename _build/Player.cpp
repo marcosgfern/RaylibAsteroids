@@ -7,7 +7,7 @@ static int TotalLifes = 3;
 static int BaseSpeed = 5;
 static int BaseRotationSpeed = 5;
 
-static float InvincibilityTimeInSeconds = 3.f;
+static float InvincibilityTimeInSeconds = 2.f;
 
 Player::Player()
 	:GameObject()
@@ -55,6 +55,7 @@ void Player::Reset()
 
 	hasTripleShot = false;
 	shootCoolingCounter = 0;
+	invincibilityCounter = 0;
 
 	position = Utilities::GetScreenCenter();
 	speed = { 0.0f, 0.0f };
@@ -65,6 +66,13 @@ void Player::Update()
 {
 	GameObject::Update();
 	if (shootCoolingCounter > 0) shootCoolingCounter--;
+	if (invincibilityCounter > 0) invincibilityCounter--;
+}
+
+void Player::Draw()
+{
+	if (IsInvincible()) Utilities::DrawTextureExCustom(sprite, position, rotation, 1.f, GRAY);
+	else GameObject::Draw();
 }
 
 bool Player::Hit()

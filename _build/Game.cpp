@@ -98,6 +98,7 @@ void Game::Update()
 		UpdateAsteroids();
 		UpdateProjectiles();
 
+		UpdatePlayerAsteroidsCollisions();
 		UpdateAsteroidsProjectilesCollisions();
 
 	} break;
