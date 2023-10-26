@@ -80,9 +80,11 @@ bool Player::Hit()
 	if (!IsInvincible())
 	{
 		lifes--;
-		if (lifes <= 0) return true;
-		else invincibilityCounter = 60 * InvincibilityTimeInSeconds;
+		if (lifes >= 0) invincibilityCounter = 60 * InvincibilityTimeInSeconds;
+		else return true;
 	}
+
+	return false;
 }
 
 bool Player::IsInvincible()

@@ -238,7 +238,10 @@ void Game::UpdatePlayerAsteroidsCollisions()
 				player.GetPosition(), player.GetRadius(),
 				asteroidIt->get().GetPosition(), asteroidIt->get().GetRadius()))
 			{
-				player.Hit();
+				if (player.Hit())
+				{
+					screen = ENDING;
+				}
 			}
 		}
 	}
