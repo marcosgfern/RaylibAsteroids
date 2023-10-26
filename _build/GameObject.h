@@ -17,6 +17,8 @@ protected:
 public:
 	GameObject();
 	Vector2 GetPosition();
+	void SetPosition(Vector2 newPosition);
+	void SetRotation(float newRotation);
 	float GetRadius();
 	bool IsActive();
 	void SetActive(bool value);

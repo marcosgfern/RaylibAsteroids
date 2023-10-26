@@ -17,6 +17,16 @@ Vector2 GameObject::GetPosition()
 	return position;
 }
 
+void GameObject::SetPosition(Vector2 newPosition)
+{
+	position = newPosition;
+}
+
+void GameObject::SetRotation(float newRotation)
+{
+	rotation = newRotation;
+}
+
 float GameObject::GetRadius()
 {
 	return radius;

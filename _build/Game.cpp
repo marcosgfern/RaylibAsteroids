@@ -57,6 +57,15 @@ void Game::RestartGameplay()
 	projectiles.Clear();
 }
 
+void Game::StartNewRound()
+{
+	player.SetPosition({ (float)WindowWidth / 2, (float)WindowHeight / 2 });
+	player.SetRotation(0.f);
+
+	projectiles.Clear();
+	GenerateAsteroids();
+}
+
 void Game::ProcessInput()
 {
 	switch (screen)
@@ -193,18 +202,28 @@ void Game::GenerateAsteroids()
 void Game::UpdateAsteroids()
 {
 	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
-	for (std::list<std::reference_wrapper<Asteroid>>::iterator asteroidIt = activeAsteroids.begin(); asteroidIt != activeAsteroids.end(); asteroidIt++)
+	if (activeAsteroids.empty())
 	{
-		asteroidIt->get().Update();
+		StartNewRound();
+	}
+	else
+	{
+		for (std::list<std::reference_wrapper<Asteroid>>::iterator asteroidIt = activeAsteroids.begin(); asteroidIt != activeAsteroids.end(); asteroidIt++)
+		{
+			asteroidIt->get().Update();
+		}
 	}
 }
 
 void Game::UpdateProjectiles()
 {
 	std::list<std::reference_wrapper<Projectile>> activeProjectiles = projectiles.GetActiveElements();
-	for (std::list<std::reference_wrapper<Projectile>>::iterator projectileIt = activeProjectiles.begin(); projectileIt != activeProjectiles.end(); projectileIt++)
+	if (!activeProjectiles.empty())
 	{
-		projectileIt->get().Update();
+		for (std::list<std::reference_wrapper<Projectile>>::iterator projectileIt = activeProjectiles.begin(); projectileIt != activeProjectiles.end(); projectileIt++)
+		{
+			projectileIt->get().Update();
+		}
 	}
 }
 

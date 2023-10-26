@@ -37,6 +37,7 @@ public:
 private:
 	void LoadTextures();
 	void RestartGameplay();
+	void StartNewRound();
 
 	void ProcessInput();
 	void Update();
