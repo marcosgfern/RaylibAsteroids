@@ -4,8 +4,10 @@ static int TargetFPS = 60;
 static int WindowWidth = 800;
 static int WindowHeight = 450;
 
-static int MinAsteroids = 5;
-static int MaxAsteroids = 15;
+static int MinAsteroids = 8;
+static int MaxAsteroids = 12;
+
+static float ShootCoolingTimeInSeconds = 0.35f;
 
 Game::Game()
 {
@@ -154,6 +156,19 @@ void Game::ProcessMovementInput()
 		if (IsKeyDown(KEY_D)) direction.x += 1.f;
 
 		player.SetSpeed(direction);
+
+
+		float rotationDirection = 0;
+
+		if (IsKeyDown(KEY_LEFT)) rotationDirection -= 1.f;
+		if (IsKeyDown(KEY_RIGHT)) rotationDirection += 1.f;
+
+		player.SetRotation(rotationDirection);
+
+		if (IsKeyDown(KEY_UP) && player.CanShoot())
+		{
+			AddProjectiles(player.Shoot(TargetFPS * ShootCoolingTimeInSeconds));
+		}
 	}
 }
 
@@ -163,6 +178,15 @@ void Game::GenerateAsteroids()
 	for (int i = 0; i < asteroidQuantity; i++)
 	{
 		asteroids.push_back(Asteroid(WindowWidth, WindowHeight));
+	}
+}
+
+void Game::AddProjectiles(std::list<Projectile> newProjectiles)
+{
+	std::list<Projectile>::iterator projectileIt;
+	for (projectileIt = newProjectiles.begin(); projectileIt != newProjectiles.end(); ++projectileIt)
+	{
+		projectiles.push_back(*projectileIt);
 	}
 }
 

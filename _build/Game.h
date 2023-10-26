@@ -43,6 +43,7 @@ private:
 	void ProcessMovementInput();
 
 	void GenerateAsteroids();
+	void AddProjectiles(std::list<Projectile> newProjectiles);
 
 	void UpdateAsteroids();
 	void UpdateProjectiles();

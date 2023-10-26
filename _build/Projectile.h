@@ -8,4 +8,5 @@ public:
 	static Texture2D Sprite;
 
 	Projectile(Vector2 startingPosition, Vector2 normalizedSpeed);
+	Projectile(Vector2 startingPosition, float directionAngleInDegrees);
 };

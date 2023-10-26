@@ -25,3 +25,8 @@ Vector2 Utilities::GetScreenCenter()
 {
     return { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 };
 }
+
+float Utilities::DegreesToRadians(float degrees)
+{
+    return degrees * PI / 180;
+}
