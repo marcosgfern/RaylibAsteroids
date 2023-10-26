@@ -20,23 +20,13 @@ Player::Player()
 
 	position = Utilities::GetScreenCenter();
 	radius = 10;
+
+	projectilePoolPointer = { 0 };
 }
 
 void Player::SetSprite(Texture2D newSprite)
 {
 	sprite = newSprite;
-}
-
-void Player::Reset()
-{
-	lifes = TotalLifes;
-
-	hasTripleShot = false;
-	shootCoolingCounter = 0;
-
-	position = Utilities::GetScreenCenter();
-	speed = { 0.0f, 0.0f };
-	rotation = 0.0f;
 }
 
 void Player::SetSpeed(Vector2 rawDirection)
@@ -52,6 +42,23 @@ void Player::SetRotation(float rotationDirection)
 
 	if (rotation > 180.f) rotation -= 360.f;
 	if (rotation < -180.f) rotation += 360.f;
+}
+
+void Player::SetProjectilePool(ProjectilePool* poolPointer)
+{
+	projectilePoolPointer = poolPointer;
+}
+
+void Player::Reset()
+{
+	lifes = TotalLifes;
+
+	hasTripleShot = false;
+	shootCoolingCounter = 0;
+
+	position = Utilities::GetScreenCenter();
+	speed = { 0.0f, 0.0f };
+	rotation = 0.0f;
 }
 
 void Player::Update()
@@ -75,20 +82,18 @@ bool Player::IsInvincible()
 	return invincibilityCounter > 0;
 }
 
-std::list<Projectile> Player::Shoot(int coolingFrames)
+void Player::Shoot(int coolingFrames)
 {
 	shootCoolingCounter = coolingFrames;
 
 	std::list<Projectile> newProjectiles = {};
 
-	newProjectiles.push_back(Projectile(GetShootingPoint(), rotation+180 + 90.f));
-	if (hasTripleShot)
+	projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f);
+	if (true||hasTripleShot)
 	{
-		newProjectiles.push_back(Projectile(GetShootingPoint(), rotation+180 + 90.f + 10.f));
-		newProjectiles.push_back(Projectile(GetShootingPoint(), rotation+180 + 90.f - 10.f));
+		projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f + 10.f);
+		projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f - 10.f);
 	}
-
-	return newProjectiles;
 }
 
 bool Player::CanShoot()

@@ -13,6 +13,8 @@ Game::Game()
 {
 	screen = LOGO;
 	framesCounter = 0;
+
+	player.SetProjectilePool(&projectiles);
 }
 
 void Game::Initialize()
@@ -52,7 +54,7 @@ void Game::RestartGameplay()
 	asteroids.Clear();
 	GenerateAsteroids();
 
-	projectiles.clear();
+	projectiles.Clear();
 }
 
 void Game::ProcessInput()
@@ -170,7 +172,7 @@ void Game::ProcessMovementInput()
 
 		if (IsKeyDown(KEY_UP) && player.CanShoot())
 		{
-			AddProjectiles(player.Shoot(TargetFPS * ShootCoolingTimeInSeconds));
+			player.Shoot(TargetFPS * ShootCoolingTimeInSeconds);
 		}
 	}
 }
@@ -181,14 +183,6 @@ void Game::GenerateAsteroids()
 		GetRandomValue(MinAsteroids, MaxAsteroids),
 		WindowWidth,
 		WindowHeight);
-}
-
-void Game::AddProjectiles(std::list<Projectile> newProjectiles)
-{
-	for (std::list<Projectile>::iterator projectileIt = newProjectiles.begin(); projectileIt != newProjectiles.end(); projectileIt++)
-	{
-		projectiles.push_back(*projectileIt);
-	}
 }
 
 void Game::UpdateAsteroids()
@@ -202,9 +196,10 @@ void Game::UpdateAsteroids()
 
 void Game::UpdateProjectiles()
 {
-	for (std::list<Projectile>::iterator projectileIt = projectiles.begin(); projectileIt != projectiles.end(); projectileIt++)
+	std::list<std::reference_wrapper<Projectile>> activeProjectiles = projectiles.GetActiveElements();
+	for (std::list<std::reference_wrapper<Projectile>>::iterator projectileIt = activeProjectiles.begin(); projectileIt != activeProjectiles.end(); projectileIt++)
 	{
-		projectileIt->Update();
+		projectileIt->get().Update();
 	}
 }
 
@@ -269,8 +264,9 @@ void Game::DrawAsteroids()
 
 void Game::DrawProjectiles()
 {
-	for (std::list<Projectile>::iterator projectileIt = projectiles.begin(); projectileIt != projectiles.end(); ++projectileIt)
+	std::list<std::reference_wrapper<Projectile>> activeProjectiles = projectiles.GetActiveElements();
+	for (std::list<std::reference_wrapper<Projectile>>::iterator projectileIt = activeProjectiles.begin(); projectileIt != activeProjectiles.end(); ++projectileIt)
 	{
-		projectileIt->Draw();
+		projectileIt->get().Draw();
 	}
 }

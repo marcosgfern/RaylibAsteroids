@@ -4,6 +4,7 @@
 #include "Asteroid.h"
 #include "AsteroidPool.h"
 #include "Projectile.h"
+#include "ProjectilePool.h"
 #include "raylib.h"
 
 #include <list>
@@ -23,7 +24,7 @@ private:
 
 	Player player;
 	AsteroidPool asteroids;
-	std::list<Projectile> projectiles;
+	ProjectilePool projectiles;
 
 	int framesCounter;
 
@@ -44,7 +45,6 @@ private:
 	void ProcessMovementInput();
 
 	void GenerateAsteroids();
-	void AddProjectiles(std::list<Projectile> newProjectiles);
 
 	void UpdateAsteroids();
 	void UpdateProjectiles();

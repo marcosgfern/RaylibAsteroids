@@ -4,9 +4,12 @@ std::list<std::reference_wrapper<Asteroid>> AsteroidPool::GetActiveElements()
 {
     std::list<std::reference_wrapper<Asteroid>> activeElements = {};
 
-    for (std::list<Asteroid>::iterator it = elements.begin(); it != elements.end(); it++)
+    if (!elements.empty())
     {
-        if (it->IsActive()) activeElements.push_back(*it);
+        for (std::list<Asteroid>::iterator it = elements.begin(); it != elements.end(); it++)
+        {
+            if (it->IsActive()) activeElements.push_back(*it);
+        }
     }
 
     return activeElements;
@@ -35,8 +38,11 @@ void AsteroidPool::AddElements(int quantity, int screenWidth, int screenHeight)
 
 void AsteroidPool::Clear()
 {
-    for (std::list<Asteroid>::iterator it = elements.begin(); it != elements.end(); it++)
+    if (!elements.empty())
     {
-        it->SetActive(false);
+        for (std::list<Asteroid>::iterator it = elements.begin(); it != elements.end(); it++)
+        {
+            it->SetActive(false);
+        }
     }
 }

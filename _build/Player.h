@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Projectile.h"
+#include "ProjectilePool.h"
 #include "raylib.h"
 
 #include <list>
@@ -15,11 +16,15 @@ private:
 	int shootCoolingCounter;
 	int invincibilityCounter;
 
+	ProjectilePool* projectilePoolPointer;
+
 public:
 	Player();
 	void SetSprite(Texture2D newSprite);
 	void SetSpeed(Vector2 rawDirection);
 	void SetRotation(float rotationDirection);
+
+	void SetProjectilePool(ProjectilePool* poolPointer);
 
 	void Reset();
 
@@ -28,7 +33,7 @@ public:
 	bool Hit();
 	bool IsInvincible();
 
-	std::list<Projectile> Shoot(int coolingFrames);
+	void Shoot(int coolingFrames);
 	bool CanShoot();
 	Vector2 GetShootingPoint();
 };

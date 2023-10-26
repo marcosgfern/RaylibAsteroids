@@ -26,3 +26,11 @@ Projectile::Projectile(Vector2 startingPosition, float directionAngleInDegrees)
 
 	sprite = Projectile::Sprite;
 }
+
+void Projectile::Reset(Vector2 startingPosition, float directionAngleInDegrees)
+{
+	Vector2 normalizedSpeed = Vector2Rotate({ 1, 0 }, Utilities::DegreesToRadians(directionAngleInDegrees));
+
+	position = startingPosition;
+	speed = Vector2Scale(normalizedSpeed, BaseSpeed);
+}

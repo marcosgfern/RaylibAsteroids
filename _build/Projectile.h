@@ -9,4 +9,6 @@ public:
 
 	Projectile(Vector2 startingPosition, Vector2 normalizedSpeed);
 	Projectile(Vector2 startingPosition, float directionAngleInDegrees);
+
+	void Reset(Vector2 startingPosition, float directionAngleInDegrees);
 };
