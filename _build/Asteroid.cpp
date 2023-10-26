@@ -50,29 +50,21 @@ void Asteroid::Reset(int screenWidth, int screenHeight)
 	SetSize(BIG);
 }
 
-/// <summary>
-/// Reduces asteroid size by one level
-/// </summary>
-/// <returns>true if asteroid gets completely destroid</returns>
-bool Asteroid::Hit()
+void Asteroid::Hit()
 {
 	switch (size)
 	{
 	case BIG:
-	{
 		SetSize(MEDIUM);
-		return false;
-	}
+		break;
 	case MEDIUM:
-	{
 		SetSize(SMALL);
-		return false;
-	}
+		break;
 	case SMALL:
-		return true;
+		active = false;
+		break;
+	default: break;
 	}
-
-	return false;
 }
 
 Vector2 Asteroid::RandomSpawn(int windowWidth, int windowHeight)

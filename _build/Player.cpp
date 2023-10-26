@@ -89,7 +89,7 @@ void Player::Shoot(int coolingFrames)
 	std::list<Projectile> newProjectiles = {};
 
 	projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f);
-	if (true||hasTripleShot)
+	if (hasTripleShot)
 	{
 		projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f + 10.f);
 		projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f - 10.f);

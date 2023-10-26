@@ -29,6 +29,7 @@ Projectile::Projectile(Vector2 startingPosition, float directionAngleInDegrees)
 
 void Projectile::Reset(Vector2 startingPosition, float directionAngleInDegrees)
 {
+	active = true;
 	Vector2 normalizedSpeed = Vector2Rotate({ 1, 0 }, Utilities::DegreesToRadians(directionAngleInDegrees));
 
 	position = startingPosition;

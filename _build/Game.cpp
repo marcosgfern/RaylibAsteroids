@@ -98,7 +98,7 @@ void Game::Update()
 		UpdateAsteroids();
 		UpdateProjectiles();
 
-		//UpdateAsteroidsProjectilesCollisions();
+		UpdateAsteroidsProjectilesCollisions();
 
 	} break;
 	case ENDING:
@@ -131,9 +131,9 @@ void Game::Draw()
 	} break;
 	case GAMEPLAY:
 	{
-		player.Draw();
-		DrawAsteroids();
 		DrawProjectiles();
+		DrawAsteroids();
+		player.Draw();
 		
 	} break;
 	case ENDING:
@@ -205,41 +205,44 @@ void Game::UpdateProjectiles()
 
 void Game::UpdatePlayerAsteroidsCollisions()
 {
-	/*std::list<Asteroid>::iterator asteroidIt = asteroids.begin();
-	while (asteroidIt != asteroids.end())
+	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
+	if (!activeAsteroids.empty())
 	{
-		if (CheckCollisionCircles(player.GetPosition(), player.GetRadius(), asteroidIt->GetPosition(), asteroidIt->GetRadius()))
-			asteroids.erase(asteroidIt++);
-		else
-			asteroidIt++;
-	}*/
+		for (std::list<std::reference_wrapper<Asteroid>>::iterator asteroidIt = activeAsteroids.begin(); asteroidIt != activeAsteroids.end(); asteroidIt++)
+		{
+			if (!player.IsInvincible() && CheckCollisionCircles(
+				player.GetPosition(), player.GetRadius(),
+				asteroidIt->get().GetPosition(), asteroidIt->get().GetRadius()))
+			{
+				player.Hit();
+			}
+		}
+	}
 }
 
 void Game::UpdateAsteroidsProjectilesCollisions()
 {
-	/*std::list<Projectile>::iterator projectileIt = projectiles.begin();
-	bool destroyCurrentAsteroid;
+	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
+	std::list<std::reference_wrapper<Projectile>> activeProjectiles = projectiles.GetActiveElements();
 
-	for (std::list<Asteroid>::iterator asteroidIt = asteroids.begin(); asteroidIt != asteroids.end(); asteroidIt++)
+	if (!activeAsteroids.empty() && !activeProjectiles.empty())
 	{
-		destroyCurrentAsteroid = false;
-		for (std::list<Projectile>::iterator projectileIt = projectiles.begin(); projectileIt != projectiles.end(); projectileIt++)
+		for (std::list<std::reference_wrapper<Asteroid>>::iterator asteroidIt = activeAsteroids.begin(); asteroidIt != activeAsteroids.end(); asteroidIt++)
 		{
-			if (CheckCollisionCircles(projectileIt->GetPosition(), projectileIt->GetRadius(), asteroidIt->GetPosition(), asteroidIt->GetRadius()))
+			activeProjectiles = projectiles.GetActiveElements();
+			for (std::list<std::reference_wrapper<Projectile>>::iterator projectileIt = activeProjectiles.begin(); projectileIt != activeProjectiles.end(); projectileIt++)
 			{
-				projectileIt = projectiles.erase(projectileIt);
-				projectileIt--;
-				
-				destroyCurrentAsteroid = asteroidIt->Hit();
+				if (CheckCollisionCircles(
+					projectileIt->get().GetPosition(), projectileIt->get().GetRadius(),
+					asteroidIt->get().GetPosition(), asteroidIt->get().GetRadius()))
+				{
+					projectileIt->get().SetActive(false);
+					asteroidIt->get().Hit();
+					break;
+				}
 			}
 		}
-
-		if (destroyCurrentAsteroid)
-		{
-			asteroidIt = asteroids.erase(asteroidIt);
-			asteroidIt--;
-		}
-	}*/
+	}
 }
 
 void Game::ShowLogo(int timeInSeconds)
