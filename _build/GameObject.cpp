@@ -1,6 +1,37 @@
 #include "GameObject.h"
 #include "Utilities.h"
 
+GameObject::GameObject()
+{
+	position = Vector2();
+	speed = Vector2();
+	radius = 0;
+	rotation = 0.f;
+	active = true;
+
+	sprite = Texture2D();
+}
+
+Vector2 GameObject::GetPosition()
+{
+	return position;
+}
+
+float GameObject::GetRadius()
+{
+	return radius;
+}
+
+bool GameObject::IsActive()
+{
+	return active;
+}
+
+void GameObject::SetActive(bool value)
+{
+	active = value;
+}
+
 void GameObject::Update()
 {
 	Move();

@@ -13,12 +13,12 @@ Texture2D Asteroid::BigSprite = {};
 Texture2D Asteroid::MediumSprite = {};
 Texture2D Asteroid::SmallSprite = {};
 
-Asteroid::Asteroid(int windowWidth, int windowHeight)
+Asteroid::Asteroid(int screenWidth, int screenHeight)
+	:GameObject()
 {
-	position = RandomSpawn(windowWidth, windowHeight);
+	position = RandomSpawn(screenWidth, screenHeight);
 	speed = Vector2Scale(Utilities::RandomNormalizedVector(), BaseSpeed);
 	radius = RadiusBig;
-	rotation = 0.f;
 
 	SetSize(BIG);
 }
@@ -37,6 +37,42 @@ void Asteroid::SetSize(AsteroidSize newSize)
 	}
 
 	size = newSize;
+}
+
+void Asteroid::Reset(int screenWidth, int screenHeight)
+{
+	active = true;
+
+	position = RandomSpawn(screenWidth, screenHeight);
+	speed = Vector2Scale(Utilities::RandomNormalizedVector(), BaseSpeed);
+	radius = RadiusBig;
+
+	SetSize(BIG);
+}
+
+/// <summary>
+/// Reduces asteroid size by one level
+/// </summary>
+/// <returns>true if asteroid gets completely destroid</returns>
+bool Asteroid::Hit()
+{
+	switch (size)
+	{
+	case BIG:
+	{
+		SetSize(MEDIUM);
+		return false;
+	}
+	case MEDIUM:
+	{
+		SetSize(SMALL);
+		return false;
+	}
+	case SMALL:
+		return true;
+	}
+
+	return false;
 }
 
 Vector2 Asteroid::RandomSpawn(int windowWidth, int windowHeight)

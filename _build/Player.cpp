@@ -7,17 +7,19 @@ static int TotalLifes = 3;
 static int BaseSpeed = 5;
 static int BaseRotationSpeed = 5;
 
+static float InvincibilityTimeInSeconds = 3.f;
+
 Player::Player()
+	:GameObject()
 {
 	lifes = TotalLifes;
 
 	hasTripleShot = false;
 	shootCoolingCounter = 0;
+	invincibilityCounter = 0;
 
 	position = Utilities::GetScreenCenter();
-	speed = { 0.0f, 0.0f };
 	radius = 10;
-	rotation = 0.0f;
 }
 
 void Player::SetSprite(Texture2D newSprite)
@@ -56,6 +58,21 @@ void Player::Update()
 {
 	GameObject::Update();
 	if (shootCoolingCounter > 0) shootCoolingCounter--;
+}
+
+bool Player::Hit()
+{
+	if (!IsInvincible())
+	{
+		lifes--;
+		if (lifes <= 0) return true;
+		else invincibilityCounter = 60 * InvincibilityTimeInSeconds;
+	}
+}
+
+bool Player::IsInvincible()
+{
+	return invincibilityCounter > 0;
 }
 
 std::list<Projectile> Player::Shoot(int coolingFrames)

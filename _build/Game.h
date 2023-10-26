@@ -2,6 +2,7 @@
 
 #include "Player.h"
 #include "Asteroid.h"
+#include "AsteroidPool.h"
 #include "Projectile.h"
 #include "raylib.h"
 
@@ -21,7 +22,7 @@ private:
 	GameScreen screen;
 
 	Player player;
-	std::list<Asteroid> asteroids;
+	AsteroidPool asteroids;
 	std::list<Projectile> projectiles;
 
 	int framesCounter;
@@ -47,6 +48,9 @@ private:
 
 	void UpdateAsteroids();
 	void UpdateProjectiles();
+
+	void UpdatePlayerAsteroidsCollisions();
+	void UpdateAsteroidsProjectilesCollisions();
 
 	void ShowLogo(int timeInSeconds);
 	void DrawAsteroids();

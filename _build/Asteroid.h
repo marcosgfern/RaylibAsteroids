@@ -23,6 +23,10 @@ public:
 	Asteroid(int screenWidth, int screenHeight);
 	void SetSize(AsteroidSize newSize);
 
+	void Reset(int screenWidth, int screenHeight);
+
+	bool Hit();
+
 private:
-	Vector2 RandomSpawn(int screenWidth, int screenHeight);
+	static Vector2 RandomSpawn(int screenWidth, int screenHeight);
 };

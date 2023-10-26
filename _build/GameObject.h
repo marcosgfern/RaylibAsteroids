@@ -10,10 +10,17 @@ protected:
 	Vector2 speed;
 	int radius;
 	float rotation;
+	bool active;
 
 	Texture2D sprite;
 
 public:
+	GameObject();
+	Vector2 GetPosition();
+	float GetRadius();
+	bool IsActive();
+	void SetActive(bool value);
+
 	void Update();
 	void Move();
 	

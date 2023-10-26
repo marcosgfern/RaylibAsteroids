@@ -49,7 +49,7 @@ void Game::RestartGameplay()
 {
 	player.Reset();
 
-	asteroids.clear();
+	asteroids.Clear();
 	GenerateAsteroids();
 
 	projectiles.clear();
@@ -95,6 +95,9 @@ void Game::Update()
 		player.Update();
 		UpdateAsteroids();
 		UpdateProjectiles();
+
+		//UpdateAsteroidsProjectilesCollisions();
+
 	} break;
 	case ENDING:
 	{
@@ -174,17 +177,15 @@ void Game::ProcessMovementInput()
 
 void Game::GenerateAsteroids()
 {
-	int asteroidQuantity = GetRandomValue(MinAsteroids, MaxAsteroids);
-	for (int i = 0; i < asteroidQuantity; i++)
-	{
-		asteroids.push_back(Asteroid(WindowWidth, WindowHeight));
-	}
+	asteroids.AddElements(
+		GetRandomValue(MinAsteroids, MaxAsteroids),
+		WindowWidth,
+		WindowHeight);
 }
 
 void Game::AddProjectiles(std::list<Projectile> newProjectiles)
 {
-	std::list<Projectile>::iterator projectileIt;
-	for (projectileIt = newProjectiles.begin(); projectileIt != newProjectiles.end(); ++projectileIt)
+	for (std::list<Projectile>::iterator projectileIt = newProjectiles.begin(); projectileIt != newProjectiles.end(); projectileIt++)
 	{
 		projectiles.push_back(*projectileIt);
 	}
@@ -192,20 +193,58 @@ void Game::AddProjectiles(std::list<Projectile> newProjectiles)
 
 void Game::UpdateAsteroids()
 {
-	std::list<Asteroid>::iterator asteroidIt;
-	for (asteroidIt = asteroids.begin(); asteroidIt != asteroids.end(); ++asteroidIt)
+	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
+	for (std::list<std::reference_wrapper<Asteroid>>::iterator asteroidIt = activeAsteroids.begin(); asteroidIt != activeAsteroids.end(); asteroidIt++)
 	{
-		asteroidIt->Update();
+		asteroidIt->get().Update();
 	}
 }
 
 void Game::UpdateProjectiles()
 {
-	std::list<Projectile>::iterator projectileIt;
-	for (projectileIt = projectiles.begin(); projectileIt != projectiles.end(); ++projectileIt)
+	for (std::list<Projectile>::iterator projectileIt = projectiles.begin(); projectileIt != projectiles.end(); projectileIt++)
 	{
 		projectileIt->Update();
 	}
+}
+
+void Game::UpdatePlayerAsteroidsCollisions()
+{
+	/*std::list<Asteroid>::iterator asteroidIt = asteroids.begin();
+	while (asteroidIt != asteroids.end())
+	{
+		if (CheckCollisionCircles(player.GetPosition(), player.GetRadius(), asteroidIt->GetPosition(), asteroidIt->GetRadius()))
+			asteroids.erase(asteroidIt++);
+		else
+			asteroidIt++;
+	}*/
+}
+
+void Game::UpdateAsteroidsProjectilesCollisions()
+{
+	/*std::list<Projectile>::iterator projectileIt = projectiles.begin();
+	bool destroyCurrentAsteroid;
+
+	for (std::list<Asteroid>::iterator asteroidIt = asteroids.begin(); asteroidIt != asteroids.end(); asteroidIt++)
+	{
+		destroyCurrentAsteroid = false;
+		for (std::list<Projectile>::iterator projectileIt = projectiles.begin(); projectileIt != projectiles.end(); projectileIt++)
+		{
+			if (CheckCollisionCircles(projectileIt->GetPosition(), projectileIt->GetRadius(), asteroidIt->GetPosition(), asteroidIt->GetRadius()))
+			{
+				projectileIt = projectiles.erase(projectileIt);
+				projectileIt--;
+				
+				destroyCurrentAsteroid = asteroidIt->Hit();
+			}
+		}
+
+		if (destroyCurrentAsteroid)
+		{
+			asteroidIt = asteroids.erase(asteroidIt);
+			asteroidIt--;
+		}
+	}*/
 }
 
 void Game::ShowLogo(int timeInSeconds)
@@ -221,17 +260,16 @@ void Game::ShowLogo(int timeInSeconds)
 
 void Game::DrawAsteroids()
 {
-	std::list<Asteroid>::iterator asteroidIt;
-	for (asteroidIt = asteroids.begin(); asteroidIt != asteroids.end(); ++asteroidIt)
+	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
+	for (std::list<std::reference_wrapper<Asteroid>>::iterator asteroidIt = activeAsteroids.begin(); asteroidIt != activeAsteroids.end(); ++asteroidIt)
 	{
-		asteroidIt->Draw();
+		asteroidIt->get().Draw();
 	}
 }
 
 void Game::DrawProjectiles()
 {
-	std::list<Projectile>::iterator projectileIt;
-	for (projectileIt = projectiles.begin(); projectileIt != projectiles.end(); ++projectileIt)
+	for (std::list<Projectile>::iterator projectileIt = projectiles.begin(); projectileIt != projectiles.end(); ++projectileIt)
 	{
 		projectileIt->Draw();
 	}

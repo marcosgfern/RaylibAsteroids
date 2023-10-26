@@ -13,6 +13,7 @@ private:
 
 	bool hasTripleShot;
 	int shootCoolingCounter;
+	int invincibilityCounter;
 
 public:
 	Player();
@@ -23,6 +24,9 @@ public:
 	void Reset();
 
 	void Update();
+
+	bool Hit();
+	bool IsInvincible();
 
 	std::list<Projectile> Shoot(int coolingFrames);
 	bool CanShoot();
