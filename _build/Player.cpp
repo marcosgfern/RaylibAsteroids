@@ -8,13 +8,14 @@ static int BaseSpeed = 5;
 static int BaseRotationSpeed = 5;
 
 static float InvincibilityTimeInSeconds = 2.f;
+static float TripleShootTimeInSeconds = 10.f;
 
 Player::Player()
 	:GameObject()
 {
 	lifes = TotalLifes;
 
-	hasTripleShot = false;
+	tripleShootCounter = 0;
 	shootCoolingCounter = 0;
 	invincibilityCounter = 0;
 
@@ -53,7 +54,7 @@ void Player::Reset()
 {
 	lifes = TotalLifes;
 
-	hasTripleShot = false;
+	tripleShootCounter = 0;
 	shootCoolingCounter = 0;
 	invincibilityCounter = 0;
 
@@ -65,6 +66,7 @@ void Player::Reset()
 void Player::Update()
 {
 	GameObject::Update();
+	if (tripleShootCounter > 0) tripleShootCounter--;
 	if (shootCoolingCounter > 0) shootCoolingCounter--;
 	if (invincibilityCounter > 0) invincibilityCounter--;
 }
@@ -99,11 +101,16 @@ void Player::Shoot(int coolingFrames)
 	std::list<Projectile> newProjectiles = {};
 
 	projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f);
-	if (hasTripleShot)
+	if (tripleShootCounter > 0)
 	{
 		projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f + 10.f);
 		projectilePoolPointer->AddElement(GetShootingPoint(), rotation+180 + 90.f - 10.f);
 	}
+}
+
+void Player::ActivateTripleShoot()
+{
+	tripleShootCounter = TripleShootTimeInSeconds * 60;
 }
 
 bool Player::CanShoot()

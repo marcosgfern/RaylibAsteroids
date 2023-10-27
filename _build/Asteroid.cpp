@@ -47,7 +47,7 @@ void Asteroid::SetSize(AsteroidSize newSize)
 	size = newSize;
 }
 
-void Asteroid::Reset(int screenWidth, int screenHeight)
+void Asteroid::Reset()
 {
 	active = true;
 

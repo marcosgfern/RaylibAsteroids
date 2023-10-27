@@ -12,7 +12,7 @@ class Player : public GameObject
 private:
 	int lifes;
 
-	bool hasTripleShot;
+	int tripleShootCounter;
 	int shootCoolingCounter;
 	int invincibilityCounter;
 
@@ -36,6 +36,8 @@ public:
 	bool IsInvincible();
 
 	void Shoot(int coolingFrames);
+	void ActivateTripleShoot();
 	bool CanShoot();
+
 	Vector2 GetShootingPoint();
 };

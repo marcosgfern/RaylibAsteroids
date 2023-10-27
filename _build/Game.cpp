@@ -9,6 +9,8 @@ static int MaxAsteroids = 12;
 
 static float ShootCoolingTimeInSeconds = 0.35f;
 
+static int NextScoreIncrement = 1000;
+
 Game::Game()
 {
 	screen = LOGO;
@@ -17,6 +19,8 @@ Game::Game()
 	gameTimeCounter = 0;
 	highScore = 0;
 	highScoreTime = 0.f;
+
+	tripleShootNextScore = NextScoreIncrement;
 
 	framesCounter = 0;
 
@@ -65,6 +69,8 @@ void Game::RestartGameplay()
 
 	points = 0;
 	gameTimeCounter = 0;
+
+	tripleShootNextScore = NextScoreIncrement;
 
 	player.Reset();
 
@@ -146,7 +152,9 @@ void Game::Update()
 		player.Update();
 		UpdateAsteroids();
 		UpdateProjectiles();
+		upgrade.Update();
 
+		UpdatePlayerUpgradeCollision();
 		UpdatePlayerAsteroidsCollisions();
 		UpdateAsteroidsProjectilesCollisions();
 		gameTimeCounter++;
@@ -177,6 +185,7 @@ void Game::Draw()
 	} break;
 	case GAMEPLAY:
 	{
+		upgrade.Draw();
 		DrawProjectiles();
 		DrawAsteroids();
 		player.Draw();
@@ -269,6 +278,17 @@ void Game::UpdateProjectiles()
 	}
 }
 
+void Game::UpdatePlayerUpgradeCollision()
+{
+	if (upgrade.IsActive() && CheckCollisionCircles(
+		player.GetPosition(), player.GetRadius(),
+		upgrade.GetPosition(), upgrade.GetRadius()))
+	{
+		upgrade.SetActive(false);
+		player.ActivateTripleShoot();
+	}
+}
+
 void Game::UpdatePlayerAsteroidsCollisions()
 {
 	std::list<std::reference_wrapper<Asteroid>> activeAsteroids = asteroids.GetActiveElements();
@@ -306,11 +326,21 @@ void Game::UpdateAsteroidsProjectilesCollisions()
 					asteroidIt->get().GetPosition(), asteroidIt->get().GetRadius()))
 				{
 					projectileIt->get().SetActive(false);
-					points += asteroidIt->get().Hit();
+					AddPoints(asteroidIt->get().Hit());
 					break;
 				}
 			}
 		}
+	}
+}
+
+void Game::AddPoints(int quantity)
+{
+	points += quantity;
+	if (points >= tripleShootNextScore)
+	{
+		upgrade.Respawn();
+		tripleShootNextScore += NextScoreIncrement;
 	}
 }
 

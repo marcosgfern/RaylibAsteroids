@@ -23,7 +23,7 @@ void AsteroidPool::AddElements(int quantity, int screenWidth, int screenHeight)
         {
             if (!it->IsActive())
             {
-                it->Reset(screenWidth, screenHeight);
+                it->Reset();
                 quantity--;
             }
         }

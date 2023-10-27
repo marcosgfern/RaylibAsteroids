@@ -5,6 +5,7 @@
 #include "AsteroidPool.h"
 #include "Projectile.h"
 #include "ProjectilePool.h"
+#include "Upgrade.h"
 #include "GameHUD.h"
 #include "Utilities.h"
 
@@ -31,9 +32,12 @@ private:
 	int highScore;
 	float highScoreTime;
 
+	int tripleShootNextScore;
+
 	Player player;
 	AsteroidPool asteroids;
 	ProjectilePool projectiles;
+	Upgrade upgrade;
 
 	GameHUD hud;
 
@@ -69,8 +73,11 @@ private:
 	void UpdateAsteroids();
 	void UpdateProjectiles();
 
+	void UpdatePlayerUpgradeCollision();
 	void UpdatePlayerAsteroidsCollisions();
 	void UpdateAsteroidsProjectilesCollisions();
+
+	void AddPoints(int quantity);
 
 	void DrawAsteroids();
 	void DrawProjectiles();

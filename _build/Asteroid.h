@@ -23,7 +23,7 @@ public:
 	Asteroid();
 	void SetSize(AsteroidSize newSize);
 
-	void Reset(int screenWidth, int screenHeight);
+	void Reset();
 
 	int Hit();
 };
