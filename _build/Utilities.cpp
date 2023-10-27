@@ -16,7 +16,9 @@ Vector2 Utilities::RandomNormalizedVector()
     Vector2 vector;
 
     vector.x = rand() / static_cast<float>(RAND_MAX);
+    if ((rand() % 2)) vector.x *= -1;
     vector.y = rand() / static_cast<float>(RAND_MAX);
+    if ((rand() % 2)) vector.y *= -1;
 
     return Vector2Normalize(vector);
 }
