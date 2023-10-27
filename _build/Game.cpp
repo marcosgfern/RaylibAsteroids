@@ -53,6 +53,7 @@ void Game::LoadResources()
 	titleTexture = LoadTexture("resources/title.png");
 
 	player.SetSprite(LoadTexture("resources/ship.png"));
+	upgrade.SetSprite(LoadTexture("resources/triple_shot_upgrade.png"));
 	hud.SetLifeSprite(LoadTexture("resources/ship.png"));
 
 	Projectile::Sprite = LoadTexture("resources/projectile.png");

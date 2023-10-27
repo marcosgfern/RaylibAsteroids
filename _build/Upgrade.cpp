@@ -49,6 +49,6 @@ void Upgrade::Draw()
 {
 	if (active)
 	{
-		DrawCircle(position.x, position.y, radius, BLUE);
+		GameObject::Draw();
 	}
 }

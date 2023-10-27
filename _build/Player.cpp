@@ -82,6 +82,7 @@ bool Player::Hit()
 	if (!IsInvincible())
 	{
 		lifes--;
+		tripleShootCounter = 0;
 		if (lifes >= 0) invincibilityCounter = 60 * InvincibilityTimeInSeconds;
 		else return true;
 	}
