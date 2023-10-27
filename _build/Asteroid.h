@@ -20,7 +20,7 @@ private:
 	AsteroidSize size;
 
 public:
-	Asteroid(int screenWidth, int screenHeight);
+	Asteroid();
 	void SetSize(AsteroidSize newSize);
 
 	void Reset(int screenWidth, int screenHeight);

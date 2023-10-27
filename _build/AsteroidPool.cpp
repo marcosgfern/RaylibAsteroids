@@ -31,7 +31,7 @@ void AsteroidPool::AddElements(int quantity, int screenWidth, int screenHeight)
 
     while (quantity > 0)
     {
-        elements.push_back(Asteroid(screenWidth, screenHeight));
+        elements.push_back(Asteroid());
         quantity--;
     }
 }

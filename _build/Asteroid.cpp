@@ -13,7 +13,7 @@ Texture2D Asteroid::BigSprite = {};
 Texture2D Asteroid::MediumSprite = {};
 Texture2D Asteroid::SmallSprite = {};
 
-Asteroid::Asteroid(int screenWidth, int screenHeight)
+Asteroid::Asteroid()
 	:GameObject()
 {
 	position = Utilities::RandomBorderSpawn();
