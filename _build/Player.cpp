@@ -29,11 +29,6 @@ int Player::GetLifes()
 	return lifes;
 }
 
-void Player::SetSprite(Texture2D newSprite)
-{
-	sprite = newSprite;
-}
-
 void Player::SetSpeed(Vector2 rawDirection)
 {
 	speed = Vector2Scale(

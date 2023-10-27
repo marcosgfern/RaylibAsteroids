@@ -22,6 +22,7 @@ public:
 	float GetRadius();
 	bool IsActive();
 	void SetActive(bool value);
+	void SetSprite(Texture2D newSprite);
 
 	void Update();
 	void Move();

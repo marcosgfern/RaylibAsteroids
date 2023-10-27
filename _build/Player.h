@@ -21,7 +21,6 @@ private:
 public:
 	Player();
 	int GetLifes();
-	void SetSprite(Texture2D newSprite);
 	void SetSpeed(Vector2 rawDirection);
 	void SetRotation(float rotationDirection);
 

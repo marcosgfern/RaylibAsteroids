@@ -42,6 +42,11 @@ void GameObject::SetActive(bool value)
 	active = value;
 }
 
+void GameObject::SetSprite(Texture2D newSprite)
+{
+	sprite = newSprite;
+}
+
 void GameObject::Update()
 {
 	Move();
