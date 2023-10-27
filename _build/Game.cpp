@@ -31,8 +31,11 @@ void Game::Initialize()
 {
 	InitWindow(WindowWidth, WindowHeight, "ASTEROIDS");
 	SetTargetFPS(TargetFPS);
+	InitAudioDevice();
 
 	LoadResources();
+
+	PlayMusicStream(music);
 
 	RestartGameplay();
 }
@@ -62,6 +65,12 @@ void Game::LoadResources()
 	Asteroid::SmallSprite = LoadTexture("resources/asteroid_small.png");
 
 	customFont = LoadFont("resources/setback.png");
+
+	fxStart = LoadSound("resources/start.wav");
+	fxUpgrade = LoadSound("resources/upgrade.wav");
+	fxExplosionBig = LoadSound("resources/explosion_big.wav");
+	fxExplosionSmall = LoadSound("resources/explosion_small.wav");
+	music = LoadMusicStream("resources/do_not_stop.mp3");
 }
 
 void Game::RestartGameplay()
@@ -113,6 +122,7 @@ void Game::ProcessInput()
 		{
 			screen = GAMEPLAY;
 			RestartGameplay();
+			PlaySound(fxStart);
 		}
 	} break;
 	case GAMEPLAY:
@@ -129,6 +139,7 @@ void Game::ProcessInput()
 		{
 			screen = TITLE;
 			framesCounter = 0;
+			PlaySound(fxStart);
 		}
 	} break;
 	default: break;
@@ -287,6 +298,7 @@ void Game::UpdatePlayerUpgradeCollision()
 	{
 		upgrade.SetActive(false);
 		player.ActivateTripleShoot();
+		PlaySound(fxUpgrade);
 	}
 }
 
@@ -301,6 +313,7 @@ void Game::UpdatePlayerAsteroidsCollisions()
 				player.GetPosition(), player.GetRadius(),
 				asteroidIt->get().GetPosition(), asteroidIt->get().GetRadius()))
 			{
+				PlaySound(fxExplosionBig);
 				if (player.Hit())
 				{
 					GameOver();
@@ -328,6 +341,7 @@ void Game::UpdateAsteroidsProjectilesCollisions()
 				{
 					projectileIt->get().SetActive(false);
 					AddPoints(asteroidIt->get().Hit());
+					PlaySound(fxExplosionSmall);
 					break;
 				}
 			}

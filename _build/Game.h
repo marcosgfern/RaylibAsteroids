@@ -44,9 +44,15 @@ private:
 	int framesCounter;
 
 	Texture2D	logoTexture,
-				titleTexture;
+				titleTexture;	
 
 	Font customFont;
+
+	Sound	fxStart,
+			fxUpgrade,
+			fxExplosionBig,
+			fxExplosionSmall;
+	Music music;
 
 public:
 	Game();
