@@ -27,12 +27,21 @@ void Asteroid::SetSize(AsteroidSize newSize)
 {
 	switch (newSize)
 	{
-	case BIG: sprite = Asteroid::BigSprite;
-		break;
-	case MEDIUM: sprite = Asteroid::MediumSprite;
-		break;
-	case SMALL: sprite = Asteroid::SmallSprite;
-		break;
+	case BIG:
+	{
+		sprite = Asteroid::BigSprite;
+		radius = RadiusBig;
+	} break;
+	case MEDIUM:
+	{
+		sprite = Asteroid::MediumSprite;
+		radius = RadiusMedium;
+	} break;
+	case SMALL:
+	{
+		sprite = Asteroid::SmallSprite;
+		radius = RadiusSmall;
+	} break;
 	default: break;
 	}
 
