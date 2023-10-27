@@ -16,9 +16,8 @@ Texture2D Asteroid::SmallSprite = {};
 Asteroid::Asteroid(int screenWidth, int screenHeight)
 	:GameObject()
 {
-	position = RandomSpawn(screenWidth, screenHeight);
+	position = Utilities::RandomBorderSpawn();
 	speed = Vector2Scale(Utilities::RandomNormalizedVector(), BaseSpeed);
-	radius = RadiusBig;
 
 	SetSize(BIG);
 }
@@ -52,7 +51,7 @@ void Asteroid::Reset(int screenWidth, int screenHeight)
 {
 	active = true;
 
-	position = RandomSpawn(screenWidth, screenHeight);
+	position = Utilities::RandomBorderSpawn();
 	speed = Vector2Scale(Utilities::RandomNormalizedVector(), BaseSpeed);
 	radius = RadiusBig;
 
@@ -75,29 +74,4 @@ int Asteroid::Hit()
 		return 30;
 	default: break;
 	}
-}
-
-Vector2 Asteroid::RandomSpawn(int windowWidth, int windowHeight)
-{
-	Vector2 spawn;
-
-	//Vertical or horizontal border
-	if (rand() % 2)
-	{
-		//Left or right
-		if (rand() % 2) spawn.x = 0;
-		else spawn.x = windowWidth - 1;
-
-		spawn.y = GetRandomValue(0, windowHeight - 1);
-	}
-	else
-	{
-		//Top or bottom
-		if (rand() % 2) spawn.y = 0;
-		else spawn.y = windowHeight - 1;
-
-		spawn.x = GetRandomValue(0, windowWidth - 1);
-	}
-
-	return spawn;
 }

@@ -26,7 +26,4 @@ public:
 	void Reset(int screenWidth, int screenHeight);
 
 	int Hit();
-
-private:
-	static Vector2 RandomSpawn(int screenWidth, int screenHeight);
 };

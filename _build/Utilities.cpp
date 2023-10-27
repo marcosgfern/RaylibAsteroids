@@ -1,7 +1,4 @@
 #include "Utilities.h"
-#include "raymath.h"
-
-#include <random>
 
 void Utilities::DrawTextureExCustom(Texture2D texture, Vector2 position, float rotation, float scale, Color tint)
 {
@@ -21,6 +18,31 @@ Vector2 Utilities::RandomNormalizedVector()
     if ((rand() % 2)) vector.y *= -1;
 
     return Vector2Normalize(vector);
+}
+
+Vector2 Utilities::RandomBorderSpawn()
+{
+	Vector2 spawn;
+
+	//Vertical or horizontal border
+	if (rand() % 2)
+	{
+		//Left or right
+		if (rand() % 2) spawn.x = 0;
+		else spawn.x = GetScreenWidth() - 1;
+
+		spawn.y = GetRandomValue(0, GetScreenHeight() - 1);
+	}
+	else
+	{
+		//Top or bottom
+		if (rand() % 2) spawn.y = 0;
+		else spawn.y = GetScreenHeight() - 1;
+
+		spawn.x = GetRandomValue(0, GetScreenWidth() - 1);
+	}
+
+	return spawn;
 }
 
 Vector2 Utilities::GetScreenCenter()
